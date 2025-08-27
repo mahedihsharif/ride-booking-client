@@ -26,12 +26,8 @@ export const withAuth = (Component: ComponentType, requiredRole?: TRole) => {
     if (!isLoading && !data?.data?.email) {
       return <Navigate to="/login" replace />;
     }
-    if (!user) {
-      // user নেই → login page এ redirect
-      return <Navigate to="/login" replace />;
-    }
 
-    if (user.isActive === activeUser.BLOCKED) {
+    if (user && user.isActive === activeUser.BLOCKED) {
       // blocked user → blocked page
       return <Navigate to="/user/blocked" replace />;
     }
