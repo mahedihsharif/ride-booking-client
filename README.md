@@ -1,69 +1,89 @@
-# React + TypeScript + Vite
+LIVE_LINK: https://ride-booking-client.vercel.app/
+OVERVIEW:
+🚖 Ride Booking Application
+The Ride Booking Application is a full-stack project built using Express.js, TypeScript, and MongoDB (Mongoose ORM). It provides a seamless platform for users to browse available rides, book them, and manage ride history while ensuring data consistency and scalability.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+🔹 Features
 
-Currently, two official plugins are available:
+🏎️ Ride Management – Add, update, and view ride details.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+👤 User Authentication – Secure login/signup with JWT.
 
-## Expanding the ESLint configuration
+📅 Booking System – Book rides, track availability, and prevent double booking.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+📊 Admin Panel APIs – Admin can manage rides, users, and bookings.
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+🔄 Real-Time Updates – Availability updates instantly when rides are booked.
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+🛡️ Security Features – Password hashing, cookie-based authentication, and validation.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+🌐 Scalable Architecture – Clean MVC pattern with TypeScript for maintainability.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+🚗 Project Features
+🔐 Authentication & Authorization
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+User Registration & Login (JWT based authentication)
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Role Based Access Control (RBAC) → Admin, User, Driver
+
+Blocked users cannot log in to the system
+
+📖 Ride Management
+
+Users can browse available rides
+
+Book a ride by selecting vehicle, pickup & drop location, time, and number of seats
+
+Automatic seat availability check before booking
+
+👤 User Features
+
+View personal booking history
+
+Cancel booking (if ride not yet started)
+
+Profile management (update user info, password change etc.)
+
+🛠️ Admin Features
+
+Manage users (block/unblock users)
+
+Manage rides (create, update, delete rides)
+
+View overall booking statistics
+
+🚕 Driver Features
+
+Accept or reject ride requests
+
+See assigned rides and booking details
+
+⚡ Other Features
+
+Responsive UI with dark mode/light mode support
+
+Error handling & validation with meaningful messages
+
+Secure API endpoints with role-based middleware
+
+Optimized queries with MongoDB & Mongoose
+
+Data consistency maintained during ride booking and cancellation
+
+🛠️ Tech Stack
+
+Backend: Node.js, Express.js, TypeScript
+
+Database: MongoDB with Mongoose
+
+Authentication: JWT & Cookies
+
+Validation: Zod / Middleware-based validation
+
+Deployment: ( Vercel )
+
+Project Setup
+git clone https://github.com/your-username/ride-booking-system.git
+cd ride-booking-system
+bun install
+npm run dev
