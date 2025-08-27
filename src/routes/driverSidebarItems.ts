@@ -1,9 +1,10 @@
-import DriverHistory from "@/pages/driver/DriverHistory";
-import EarningHistory from "@/pages/driver/EarningHistory";
-import StatusUpdatePage from "@/pages/driver/StatusUpdatePage";
-import ViewProfile from "@/pages/ViewProfile";
 import type { ISidebarItem } from "@/types";
 import { Clock, Truck, User, Wallet } from "lucide-react";
+import { lazy } from "react";
+const ViewProfile = lazy(() => import("@/pages/ViewProfile"));
+const DriverHistory = lazy(() => import("@/pages/driver/DriverHistory"));
+const EarningHistory = lazy(() => import("@/pages/driver/EarningHistory"));
+const StatusUpdatePage = lazy(() => import("@/pages/driver/StatusUpdatePage"));
 
 export const driverSidebarItems: ISidebarItem[] = [
   {

@@ -9,6 +9,7 @@ import { rideStatus } from "@/constants/ride.constant";
 import { useRiderSingleRideInfoQuery } from "@/redux/features/rides/ride.api";
 import { Car, Clock, User } from "lucide-react";
 import { useParams } from "react-router";
+import SOSButton from "../SOSButton";
 
 export default function RequestDetails() {
   const { id } = useParams();
@@ -166,6 +167,7 @@ export default function RequestDetails() {
           </div>
         </CardContent>
       </Card>
+      <SOSButton />
     </div>
   );
 }

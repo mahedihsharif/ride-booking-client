@@ -7,7 +7,11 @@ import type {
   IRideData,
   ISingleRideData,
 } from "@/types";
-import type { EarningsStats, IStatus, RideId } from "@/types/ride.type";
+import {
+  type EarningsStats,
+  type IStatus,
+  type RideId,
+} from "@/types/ride.type";
 import type { IVehicle } from "@/types/vehicle.type";
 
 const driverApi = baseApi.injectEndpoints({
@@ -79,9 +83,7 @@ const driverApi = baseApi.injectEndpoints({
         method: "PATCH",
         data: status,
       }),
-      invalidatesTags: (_result, _error, { rideId }) => [
-        { type: "RIDE", id: rideId },
-      ],
+      invalidatesTags: ["RIDE"],
     }),
     singleRide: builder.query<IResponse<ISingleRideData>, RideId>({
       query: (id) => ({

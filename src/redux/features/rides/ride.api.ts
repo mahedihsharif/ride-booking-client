@@ -33,6 +33,13 @@ export const authApi = baseApi.injectEndpoints({
       }),
       providesTags: ["RIDE"],
     }),
+    getRideById: builder.query<IResponse<ISingleRideData>, string>({
+      query: (id) => ({
+        url: `/rides/active/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["RIDE"],
+    }),
   }),
 });
 
@@ -40,4 +47,5 @@ export const {
   useRiderRidesInfoQuery,
   useRiderSingleRideInfoQuery,
   useRidesMutation,
+  useGetRideByIdQuery,
 } = authApi;

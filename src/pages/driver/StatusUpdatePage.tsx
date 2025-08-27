@@ -6,7 +6,7 @@ import StatusUpdateModal from "./StatusUpdateModal";
 const StatusUpdatePage = () => {
   const { id } = useParams();
 
-  const { data, isLoading } = useSingleRideQuery({ id: id! }, { skip: !id });
+  const { data, isLoading } = useSingleRideQuery(id!, { skip: !id });
   if (isLoading) {
     <Skeleton className="h-[20px] w-[100px] rounded-full" />;
   }

@@ -9,9 +9,12 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Password from "@/components/ui/Password";
+import { activeUser } from "@/constants/admin.constant";
 import { globalErrorResponse } from "@/helpers/globalErrorHandler";
 import { cn } from "@/lib/utils";
 import { useLoginMutation } from "@/redux/features/auth/auth.api";
+import { useAppDispatch } from "@/redux/hook";
+import { setUser } from "@/redux/reducer/authSlice";
 import { loginSchema } from "@/validation/auth.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -25,6 +28,7 @@ export function LoginForm({
 }: React.HTMLAttributes<HTMLDivElement>) {
   const navigate = useNavigate();
   const [login] = useLoginMutation();
+  const dispatch = useAppDispatch();
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -37,7 +41,20 @@ export function LoginForm({
       const res = await login(data).unwrap();
 
       if (res.success) {
-        navigate("/");
+        if (res.data.user.isActive === activeUser.BLOCKED) {
+          navigate("/user/blocked");
+          return;
+        } else {
+          dispatch(
+            setUser({
+              id: res.data.user._id,
+              name: res.data.user.name,
+              email: res.data.user.email,
+              isActive: res.data.user.isActive as "ACTIVE" | "BLOCKED",
+            })
+          );
+          navigate("/");
+        }
       }
     } catch (error) {
       if (error) {

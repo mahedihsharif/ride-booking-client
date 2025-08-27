@@ -1,3 +1,4 @@
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Pagination,
   PaginationContent,
@@ -86,8 +87,29 @@ export default function DriversInfo() {
   const totalItems = usersData?.data?.meta?.total || 0;
   const totalPages = Math.ceil(totalItems / limit);
 
-  if (isLoading)
-    return <Skeleton className="h-[20px] w-[100px] rounded-full" />;
+  if (isLoading) {
+    return (
+      <Card className="w-full max-w-sm rounded-2xl shadow-md p-4">
+        <CardContent className="space-y-4">
+          {/* Image Skeleton */}
+          <Skeleton className="h-40 w-full rounded-xl" />
+
+          {/* Title Skeleton */}
+          <Skeleton className="h-6 w-3/4" />
+
+          {/* Description Skeleton */}
+          <Skeleton className="h-4 w-full" />
+          <Skeleton className="h-4 w-5/6" />
+
+          {/* Button Skeleton */}
+          <div className="flex gap-2">
+            <Skeleton className="h-10 w-24 rounded-lg" />
+            <Skeleton className="h-10 w-24 rounded-lg" />
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <div>

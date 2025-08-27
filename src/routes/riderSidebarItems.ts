@@ -1,7 +1,9 @@
-import Rider from "@/pages/rider/Rider";
-import ViewProfile from "@/pages/ViewProfile";
 import type { ISidebarItem } from "@/types";
 import { Clock, User } from "lucide-react";
+import { lazy } from "react";
+const ViewProfile = lazy(() => import("@/pages/ViewProfile"));
+
+const Rider = lazy(() => import("@/pages/rider/Rider"));
 
 export const riderSidebarItems: ISidebarItem[] = [
   {
@@ -15,6 +17,7 @@ export const riderSidebarItems: ISidebarItem[] = [
       },
     ],
   },
+
   {
     title: "Profile Management",
     items: [

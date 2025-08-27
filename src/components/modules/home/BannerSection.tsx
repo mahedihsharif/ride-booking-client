@@ -6,9 +6,12 @@ import { AddRideModal } from "../rides/AddRideModal";
 
 export default function BannerSection() {
   const { data, isLoading } = useUserInfoQuery(undefined);
+
   if (isLoading) {
-    <div>Loading....</div>;
+    return <div>Loading....</div>;
   }
+
+  const userRole = data?.data?.role;
 
   return (
     <section
@@ -28,60 +31,95 @@ export default function BannerSection() {
         transition={{ duration: 0.8 }}
         className="relative z-10 text-center max-w-2xl px-4"
       >
-        {data?.data.role === role.DRIVER ? (
+        {/* Headline */}
+        {userRole === role.DRIVER && (
           <h1 className="text-4xl md:text-6xl font-bold mb-6 text-orange-500 dark:text-white">
             Drive & Earn on Your Schedule 🚖
           </h1>
-        ) : (
+        )}
+        {userRole === role.RIDER && (
           <h1 className="text-4xl md:text-6xl font-bold mb-6 text-orange-500 dark:text-white">
             Find Your Ride, Anytime 🚖
           </h1>
         )}
-        {data?.data.role === role.DRIVER ? (
+        {userRole === role.ADMIN && (
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 text-orange-500 dark:text-white">
+            Manage the Platform Efficiently 🛠️
+          </h1>
+        )}
+        {!userRole && (
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 text-orange-500 dark:text-white">
+            Find Your Ride, Anytime 🚖
+          </h1>
+        )}
+
+        {/* Sub text */}
+        {userRole === role.DRIVER && (
           <p className="text-lg md:text-xl mb-8 text-orange-400 dark:text-gray-300">
             Earn more by driving safe and reliable. Your road, your schedule,
             your success.
           </p>
-        ) : (
+        )}
+        {userRole === role.RIDER && (
+          <p className="text-lg md:text-xl mb-8 text-orange-400 dark:text-gray-300">
+            Book affordable rides instantly with trusted drivers. Your journey,
+            your comfort, your choice.
+          </p>
+        )}
+        {userRole === role.ADMIN && (
+          <p className="text-lg md:text-xl mb-8 text-orange-400 dark:text-gray-300">
+            Keep track of rides, revenue, and drivers. Control everything from
+            one place.
+          </p>
+        )}
+        {!userRole && (
           <p className="text-lg md:text-xl mb-8 text-orange-400 dark:text-gray-300">
             Book affordable rides instantly with trusted drivers. Your journey,
             your comfort, your choice.
           </p>
         )}
 
+        {/* Action buttons */}
         <div className="flex gap-4 justify-center">
-          {data?.data.role === role.DRIVER ? (
+          {userRole === role.DRIVER && (
+            <>
+              <Button
+                size="lg"
+                className="rounded-2xl shadow-lg bg-blue-600 dark:bg-[#F54900] text-white cursor-pointer"
+                onClick={() => (window.location.href = "/driver/profile")}
+              >
+                Go Online
+              </Button>
+            </>
+          )}
+
+          {userRole === role.RIDER && (
+            <>
+              <Button
+                size="lg"
+                className="rounded-2xl shadow-lg bg-blue-600 dark:bg-[#F54900] text-white cursor-pointer"
+              >
+                <AddRideModal context="Request a Ride" />
+              </Button>
+            </>
+          )}
+
+          {userRole === role.ADMIN && (
             <Button
               size="lg"
-              className="rounded-2xl shadow-lg bg-blue-600 dark:bg-[#F54900] text-white cursor-pointer"
+              className="rounded-2xl shadow-lg bg-green-600 dark:bg-green-700 text-white cursor-pointer"
+              onClick={() => (window.location.href = "/admin")}
             >
-              <AddRideModal context="Go Online" />
+              Go to Dashboard
             </Button>
-          ) : (
+          )}
+
+          {!userRole && (
             <Button
               size="lg"
               className="rounded-2xl shadow-lg bg-blue-600 dark:bg-[#F54900] text-white cursor-pointer"
             >
               <AddRideModal context="Request a Ride" />
-            </Button>
-          )}
-
-          {data?.data.role === role.RIDER && (
-            <Button
-              size="lg"
-              variant="outline"
-              className="rounded-2xl border-black dark:border-white text-black dark:text-white hover:bg-black/10 dark:hover:bg-white/10 hover:text-black dark:hover:text-white cursor-pointer"
-            >
-              Become a Driver
-            </Button>
-          )}
-          {data?.data.role === role.DRIVER && (
-            <Button
-              size="lg"
-              variant="outline"
-              className="rounded-2xl border-black dark:border-white text-black dark:text-white hover:bg-black/10 dark:hover:bg-white/10 hover:text-black dark:hover:text-white cursor-pointer"
-            >
-              Become a Rider
             </Button>
           )}
         </div>

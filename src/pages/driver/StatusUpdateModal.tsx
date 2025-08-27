@@ -15,7 +15,7 @@ import {
   useStatusUpdateRideMutation,
 } from "@/redux/features/auth/driver.api";
 import type { ISingleRideData } from "@/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 
@@ -26,36 +26,35 @@ interface IProps {
 export default function StatusUpdateModal({ rides }: IProps) {
   const [status, setStatus] = useState(rides?.status);
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
-  const [statusUpdateRide] = useStatusUpdateRideMutation();
-  const { data } = useSingleRideQuery({ id: rides?._id });
+  const [statusUpdateRide, { isLoading: updateLoading }] =
+    useStatusUpdateRideMutation();
+
+  // fresh data fetch
+  const { data, isFetching } = useSingleRideQuery(rides?._id);
+
+  useEffect(() => {
+    if (data?.data?.status) {
+      setStatus(data.data.status);
+    }
+  }, [data?.data?.status]);
 
   const handleUpdate = async () => {
     try {
-      setLoading(true);
       const res = await statusUpdateRide({
         rideId: rides?._id,
         status: { status },
-      });
+      }).unwrap();
 
-      if (res.data?.success) {
-        toast.success(res.data.message);
-        if (status === rideStatus.COMPLETED) {
-          navigate("/driver/rides/history");
-        }
-      } else if (res?.error) {
-        if (res?.error) {
-          const err = globalErrorResponse(res?.error);
-          toast.error(err?.data.message);
-        }
+      toast.success(res.message);
+
+      if (status === rideStatus.COMPLETED) {
+        navigate("/driver/rides/history");
       }
     } catch (error) {
       if (error) {
         const err = globalErrorResponse(error);
-        toast.error(err?.data.message);
+        toast.error(err?.data?.message);
       }
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -68,17 +67,18 @@ export default function StatusUpdateModal({ rides }: IProps) {
           </CardTitle>
           <Button
             size="sm"
+            disabled={isFetching}
             className={
-              data?.data.status === rideStatus.PICKED_UP
-                ? "bg-blue-500 text-white hover:bg-blue-600"
-                : data?.data.status === rideStatus.IN_TRANSIT
-                ? "bg-orange-500 text-white hover:bg-orange-600"
-                : data?.data.status === rideStatus.COMPLETED
-                ? "bg-green-500 text-white hover:bg-green-600"
-                : "bg-gray-300 text-gray-700 hover:bg-gray-400"
+              data?.data?.status === rideStatus.PICKED_UP
+                ? "bg-blue-500 text-white"
+                : data?.data?.status === rideStatus.IN_TRANSIT
+                ? "bg-orange-500 text-white"
+                : data?.data?.status === rideStatus.COMPLETED
+                ? "bg-green-500 text-white"
+                : "bg-gray-300 text-gray-700"
             }
           >
-            {data?.data.status || "Pending"}
+            {data?.data?.status || "Pending"}
           </Button>
         </CardHeader>
 
@@ -91,10 +91,11 @@ export default function StatusUpdateModal({ rides }: IProps) {
               <strong>Driver:</strong> {rides?.driver?.name || "N/A"}
             </p>
             <p>
-              <strong>Pickup:</strong> {rides?.pickupLocation.address}
+              <strong>Pickup:</strong> {rides?.pickupLocation?.address}
             </p>
             <p>
-              <strong>Destination:</strong> {rides?.destinationLocation.address}
+              <strong>Destination:</strong>{" "}
+              {rides?.destinationLocation?.address}
             </p>
             <p>
               <strong>Fare:</strong> BDT: {rides?.fare}
@@ -124,9 +125,9 @@ export default function StatusUpdateModal({ rides }: IProps) {
           <Button
             className="w-full mt-2 cursor-pointer"
             onClick={handleUpdate}
-            disabled={loading}
+            disabled={updateLoading}
           >
-            {loading ? "Updating..." : `Update Status → ${status}`}
+            {updateLoading ? "Updating..." : `Update Status → ${status}`}
           </Button>
         </CardContent>
       </Card>

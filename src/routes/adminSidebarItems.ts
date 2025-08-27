@@ -1,4 +1,3 @@
-import ViewProfile from "@/pages/ViewProfile";
 import type { ISidebarItem } from "@/types";
 import { Truck, User } from "lucide-react";
 import { lazy } from "react";
@@ -6,6 +5,7 @@ const RidersInfo = lazy(() => import("@/pages/admin/RidersInfo"));
 const DriversInfo = lazy(() => import("@/pages/admin/DriversInfo"));
 const RidesInfo = lazy(() => import("@/pages/admin/RidesInfo"));
 const Analytics = lazy(() => import("@/pages/admin/Analytics"));
+const ViewProfile = lazy(() => import("@/pages/ViewProfile"));
 
 export const adminSidebarItems: ISidebarItem[] = [
   {

@@ -11,6 +11,7 @@ import { driverSidebarItems } from "./driverSidebarItems";
 import { riderSidebarItems } from "./riderSidebarItems";
 
 const HomePage = lazy(() => import("@/pages/HomePage"));
+const BlockedPage = lazy(() => import("@/pages/BlockedPage"));
 const About = lazy(() => import("@/pages/About"));
 const Contact = lazy(() => import("@/pages/Contact"));
 const Features = lazy(() => import("@/pages/Features"));
@@ -102,6 +103,10 @@ export const router = createBrowserRouter([
   {
     Component: Register,
     path: "/register",
+  },
+  {
+    Component: BlockedPage,
+    path: "/user/blocked",
   },
 
   {

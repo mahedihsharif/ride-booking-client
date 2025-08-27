@@ -38,20 +38,37 @@ export default function Analytics() {
   }
 
   // Ride Volume Mapping
-  const rideData = rideVolume?.data?.map((ride: any) => ({
-    date: ride._id,
-    totalRides: ride.totalRides,
-  }));
+  const rideData = rideVolume?.data?.map((ride: any) => {
+    const { year, month, day } = ride._id;
+    const dateStr = day ? `${year}-${month}-${day}` : `${year}-${month}`;
+    return {
+      date: dateStr,
+      totalRides: ride.totalRides,
+    };
+  });
+
+  // Today's Total Rides
+  const today = new Date();
+  const todayStr = `${today.getFullYear()}-${
+    today.getMonth() + 1
+  }-${today.getDate()}`;
+  const todaysRides =
+    rideData?.find((r: { date: string }) => r.date === todayStr)?.totalRides ||
+    0;
 
   // Revenue Trends Mapping
-  const revenueData = revenueTrends?.data?.map((rev: any) => ({
-    date: rev._id,
-    totalRevenue: rev.totalRevenue,
-  }));
+  const revenueData = revenueTrends?.data?.map((rev: any) => {
+    const { year, month, day } = rev._id;
+    const dateStr = day ? `${year}-${month}-${day}` : `${year}-${month}`;
+    return {
+      date: dateStr,
+      totalRevenue: rev.totalRevenue,
+    };
+  });
 
   // Driver Activity Mapping
   const driverData = driverActivity?.data?.map((driver: any) => ({
-    driverName: driver.driverName,
+    driverName: driver.name,
     ridesCompleted: driver.ridesCompleted,
   }));
 
@@ -61,6 +78,9 @@ export default function Analytics() {
       <Card>
         <CardHeader>
           <CardTitle>Ride Volume</CardTitle>
+          <p className="text-sm text-gray-500 dark:text-gray-300">
+            Today’s Total Rides: {todaysRides}
+          </p>
         </CardHeader>
         <CardContent className="h-[300px]">
           <ResponsiveContainer width="100%" height="100%">
