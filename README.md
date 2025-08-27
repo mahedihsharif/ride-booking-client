@@ -1,3 +1,22 @@
+# Credentials
+
+## Admin:
+
+email: admin@gmail.com
+password: Admin118@#
+
+## Rider:
+
+email: rider@gmail.com
+password: Rider118@#
+
+## Driver:
+
+email: driver@gmail.com
+password: Driver118@#
+
+---
+
 # 🚖 Ride Booking Application
 
 🔗 **Live Demo**: [Ride Booking Client](https://ride-booking-client.vercel.app/)
