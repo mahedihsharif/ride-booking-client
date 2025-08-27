@@ -2,17 +2,17 @@
 
 ## Admin:
 
-email: admin@gmail.com
+email: admin@gmail.com  
 password: Admin118@#
 
 ## Rider:
 
-email: rider@gmail.com
+email: rider@gmail.com  
 password: Rider118@#
 
 ## Driver:
 
-email: driver@gmail.com
+email: driver@gmail.com  
 password: Driver118@#
 
 ---
