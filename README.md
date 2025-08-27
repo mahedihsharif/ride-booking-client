@@ -1,89 +1,106 @@
-LIVE_LINK: https://ride-booking-client.vercel.app/
-OVERVIEW:
-🚖 Ride Booking Application
-The Ride Booking Application is a full-stack project built using Express.js, TypeScript, and MongoDB (Mongoose ORM). It provides a seamless platform for users to browse available rides, book them, and manage ride history while ensuring data consistency and scalability.
+# 🚖 Ride Booking Application
 
-🔹 Features
+🔗 **Live Demo**: [Ride Booking Client](https://ride-booking-client.vercel.app/)
 
-🏎️ Ride Management – Add, update, and view ride details.
+---
 
-👤 User Authentication – Secure login/signup with JWT.
+## 📌 Overview
 
-📅 Booking System – Book rides, track availability, and prevent double booking.
+The **Ride Booking Application** is a full-stack project built using **Express.js, TypeScript, and MongoDB (Mongoose ORM)**.  
+It provides a seamless platform for users to browse available rides, book them, and manage ride history while ensuring **data consistency and scalability**.
 
-📊 Admin Panel APIs – Admin can manage rides, users, and bookings.
+---
 
-🔄 Real-Time Updates – Availability updates instantly when rides are booked.
+## ✨ Core Features
 
-🛡️ Security Features – Password hashing, cookie-based authentication, and validation.
+### 🏎️ Ride Management
 
-🌐 Scalable Architecture – Clean MVC pattern with TypeScript for maintainability.
+- Add, update, and view ride details.
 
-🚗 Project Features
-🔐 Authentication & Authorization
+### 👤 User Authentication
 
-User Registration & Login (JWT based authentication)
+- Secure login/signup with **JWT**.
 
-Role Based Access Control (RBAC) → Admin, User, Driver
+### 📅 Booking System
 
-Blocked users cannot log in to the system
+- Book rides, track availability, and prevent double booking.
 
-📖 Ride Management
+### 📊 Admin Panel APIs
 
-Users can browse available rides
+- Admin can manage rides, users, and bookings.
 
-Book a ride by selecting vehicle, pickup & drop location, time, and number of seats
+### 🔄 Real-Time Updates
 
-Automatic seat availability check before booking
+- Availability updates instantly when rides are booked.
 
-👤 User Features
+### 🛡️ Security Features
 
-View personal booking history
+- Password hashing, cookie-based authentication, and validation.
 
-Cancel booking (if ride not yet started)
+### 🌐 Scalable Architecture
 
-Profile management (update user info, password change etc.)
+- Clean **MVC pattern** with TypeScript for maintainability.
 
-🛠️ Admin Features
+---
 
-Manage users (block/unblock users)
+## 🚗 Project Features
 
-Manage rides (create, update, delete rides)
+### 🔐 Authentication & Authorization
 
-View overall booking statistics
+- User Registration & Login (**JWT based authentication**)
+- Role Based Access Control (**RBAC**) → Admin, User, Driver
+- Blocked users cannot log in to the system
 
-🚕 Driver Features
+### 📖 Ride Management
 
-Accept or reject ride requests
+- Browse available rides
+- Book a ride (vehicle, pickup, drop location, time, seats)
+- Automatic seat availability check before booking
 
-See assigned rides and booking details
+### 👤 User Features
 
-⚡ Other Features
+- View personal booking history
+- Cancel booking (if ride not yet started)
+- Profile management (update info, password change etc.)
 
-Responsive UI with dark mode/light mode support
+### 🛠️ Admin Features
 
-Error handling & validation with meaningful messages
+- Manage users (block/unblock users)
+- Manage rides (create, update, delete rides)
+- View overall booking statistics
 
-Secure API endpoints with role-based middleware
+### 🚕 Driver Features
 
-Optimized queries with MongoDB & Mongoose
+- Accept or reject ride requests
+- View assigned rides and booking details
 
-Data consistency maintained during ride booking and cancellation
+### ⚡ Other Features
 
-🛠️ Tech Stack
+- Responsive UI with dark mode/light mode support
+- Error handling & validation with meaningful messages
+- Secure API endpoints with role-based middleware
+- Optimized queries with MongoDB & Mongoose
+- Data consistency maintained during booking & cancellation
 
-Backend: Node.js, Express.js, TypeScript
+---
 
-Database: MongoDB with Mongoose
+## 🛠️ Tech Stack
 
-Authentication: JWT & Cookies
+- **Backend**: Node.js, Express.js, TypeScript
+- **Database**: MongoDB with Mongoose
+- **Authentication**: JWT & Cookies
+- **Validation**: Zod / Middleware-based validation
+- **Deployment**: Vercel
 
-Validation: Zod / Middleware-based validation
+---
 
-Deployment: ( Vercel )
+## ⚡ Project Setup
 
-Project Setup
+### 1️⃣ Clone the Repository
+
+```bash
 git clone https://github.com/your-username/ride-booking-system.git
 cd ride-booking-system
 bun install
-npm run dev
+bun dev
+```
