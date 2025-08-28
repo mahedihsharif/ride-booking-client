@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import {
   useSendSMSMutation,
@@ -16,22 +16,22 @@ export default function SOSButton() {
   const [sendWhatsApp] = useSendWhatsAppMutation();
 
   const handleSOS = async () => {
-    if (!coords) {
-      setMessage("Location not available. Allow location access!");
-      return;
-    }
+    // Default coordinates use korbe jodi location na thake
+    const lat = coords?.latitude ?? 23.8103;
+    const lng = coords?.longitude ?? 90.4125;
 
     const payload = {
-      message: `EMERGENCY! Need help at https://maps.google.com/?q=${coords.latitude},${coords.longitude}`,
+      message: `EMERGENCY! Need help at https://maps.google.com/?q=${lat},${lng}`,
       to: "+880123456789",
     };
 
     try {
-      await sendSMS(payload);
-      await sendWhatsApp(payload);
-      setMessage("SOS alert sent successfully!");
-    } catch (err) {
-      setMessage("Failed to send SOS alert.");
+      await sendSMS(payload).unwrap();
+      await sendWhatsApp(payload).unwrap();
+      setMessage("✅ SOS alert sent successfully!");
+    } catch (err: any) {
+      console.error("SOS Error:", err);
+      setMessage(err?.data?.message || "❌ Failed to send SOS alert.");
     }
   };
 

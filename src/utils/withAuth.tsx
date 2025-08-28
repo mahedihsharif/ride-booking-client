@@ -27,11 +27,7 @@ export const withAuth = (Component: ComponentType, requiredRole?: TRole) => {
       return <Navigate to="/login" replace />;
     }
 
-    if (!user) {
-      return <Navigate to="/user/blocked" replace />;
-    }
-
-    if (user.isActive === activeUser.BLOCKED) {
+    if (user && user.isActive === activeUser.BLOCKED) {
       // blocked user → blocked page
       return <Navigate to="/user/blocked" replace />;
     }
