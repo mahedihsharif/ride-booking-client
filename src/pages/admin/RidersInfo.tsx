@@ -40,7 +40,7 @@ export default function RidersInfo() {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
 
-  const { data: usersData, isLoading } = useRidersInfoQuery({
+  const { data: usersData, isLoading, error } = useRidersInfoQuery({
     page: currentPage,
     limit,
     search: searchTerm || undefined,
@@ -49,6 +49,20 @@ export default function RidersInfo() {
 
   const [ridersActiveStatus] = useRidersActiveStatusMutation();
 
+  if (isLoading) {
+    return (
+      <div className="p-4">Loading riders...</div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="p-4 text-red-500">
+        Error loading riders: {globalErrorResponse(error)?.data?.message || "Unknown error"}
+      </div>
+    );
+  }
+
   const totalItems = usersData?.data?.meta?.total || 0;
   const totalPages = Math.ceil(totalItems / limit);
 
@@ -56,30 +70,6 @@ export default function RidersInfo() {
     e.preventDefault();
     setCurrentPage(1);
   };
-
-  if (isLoading) {
-    return (
-      <Card className="w-full max-w-sm rounded-2xl shadow-md p-4">
-        <CardContent className="space-y-4">
-          {/* Image Skeleton */}
-          <Skeleton className="h-40 w-full rounded-xl" />
-
-          {/* Title Skeleton */}
-          <Skeleton className="h-6 w-3/4" />
-
-          {/* Description Skeleton */}
-          <Skeleton className="h-4 w-full" />
-          <Skeleton className="h-4 w-5/6" />
-
-          {/* Button Skeleton */}
-          <div className="flex gap-2">
-            <Skeleton className="h-10 w-24 rounded-lg" />
-            <Skeleton className="h-10 w-24 rounded-lg" />
-          </div>
-        </CardContent>
-      </Card>
-    );
-  }
 
   return (
     <div>
@@ -136,16 +126,20 @@ export default function RidersInfo() {
           </TableHeader>
 
           <TableBody>
-            {usersData?.data?.riders?.map(
-              (user: IUserResponseData, index: number) => (
-                <TableRow
-                  key={user._id}
-                  className={
-                    index % 2 === 0
-                      ? "bg-gray-50 dark:bg-gray-900"
-                      : "bg-white dark:bg-gray-800"
-                  }
-                >
+            {(Array.isArray(usersData?.data)
+              ? usersData?.data
+              : usersData?.data?.riders ||
+                (usersData?.data as any)?.data ||
+                []
+            ).map((user: IUserResponseData, index: number) => (
+              <TableRow
+                key={user._id}
+                className={
+                  index % 2 === 0
+                    ? "bg-gray-50 dark:bg-gray-900"
+                    : "bg-white dark:bg-gray-800"
+                }
+              >
                   <TableCell>{user.name}</TableCell>
                   <TableCell>{user.email}</TableCell>
                   <TableCell>{user.phone}</TableCell>

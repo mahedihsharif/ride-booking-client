@@ -6,6 +6,7 @@ interface User {
   name: string;
   email: string;
   isActive: "ACTIVE" | "BLOCKED";
+  token?: string;
 }
 
 interface AuthState {
@@ -29,8 +30,10 @@ const authSlice = createSlice({
     setUser: (state, action: PayloadAction<User | null>) => {
       if (action.payload?.isActive === "ACTIVE") {
         state.user = action.payload;
+        state.token = action.payload.token || null;
       } else {
         state.user = null; // blocked user store এ যাবে না
+        state.token = null;
       }
     },
     logout: (state) => {

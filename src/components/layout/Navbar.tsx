@@ -19,6 +19,7 @@ import {
   useUserInfoQuery,
 } from "@/redux/features/auth/auth.api";
 import { useAppDispatch } from "@/redux/hook";
+import { logout as logoutAction } from "@/redux/reducer/authSlice";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { Skeleton } from "../ui/skeleton";
@@ -46,6 +47,8 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     await logout(undefined);
+    localStorage.removeItem("accessToken");
+    dispatch(logoutAction());
     dispatch(authApi.util.resetApiState());
   };
   useEffect(() => {
@@ -56,12 +59,14 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
   if (isLoading) {
-    <Skeleton className="h-[20px] w-[100px] rounded-full" />;
+    return <Skeleton className="h-[20px] w-[100px] rounded-full" />;
   }
   return (
     <header
-      className={`sticky top-0 z-50 transition-colors duration-300 ${
-        scrolled ? "bg-gray-900" : "border-b dark:bg-[#09090B]"
+      className={`sticky top-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-background/80 backdrop-blur-md shadow-lg border-b border-border"
+          : "bg-background border-b border-border"
       }`}
     >
       <div className="container mx-auto px-4 flex h-16 items-center justify-between gap-4">
@@ -112,7 +117,7 @@ const Navbar = () => {
                           <NavigationMenuItem>
                             <NavigationMenuLink
                               asChild
-                              className="text-muted-foreground hover:text-primary py-1.5 font-medium"
+                              className="text-foreground hover:bg-primary hover:text-primary-foreground px-3 py-1.5 rounded-md font-bold transition-all"
                             >
                               <Link to={link.href}>{link.label}</Link>
                             </NavigationMenuLink>
@@ -122,7 +127,7 @@ const Navbar = () => {
                           <NavigationMenuItem>
                             <NavigationMenuLink
                               asChild
-                              className="text-muted-foreground hover:text-primary py-1.5 font-medium"
+                              className="text-foreground hover:bg-primary hover:text-primary-foreground px-3 py-1.5 rounded-md font-bold transition-all"
                             >
                               <Link to={link.href}>{link.label}</Link>
                             </NavigationMenuLink>
@@ -149,7 +154,7 @@ const Navbar = () => {
                         <NavigationMenuItem>
                           <NavigationMenuLink
                             asChild
-                            className="text-muted-foreground hover:text-primary py-1.5 font-medium"
+                            className="text-foreground hover:bg-primary hover:text-primary-foreground px-3 py-1.5 rounded-md font-bold transition-all"
                           >
                             <Link to={link.href}>{link.label}</Link>
                           </NavigationMenuLink>
@@ -159,7 +164,7 @@ const Navbar = () => {
                         <NavigationMenuItem>
                           <NavigationMenuLink
                             asChild
-                            className="text-muted-foreground hover:text-primary py-1.5 font-medium"
+                            className="text-foreground hover:bg-primary hover:text-primary-foreground px-3 py-1.5 rounded-md font-bold transition-all"
                           >
                             <Link to={link.href}>{link.label}</Link>
                           </NavigationMenuLink>
@@ -178,13 +183,13 @@ const Navbar = () => {
             <Button
               onClick={handleLogout}
               variant="outline"
-              className="text-sm cursor-pointer"
+              className="text-sm cursor-pointer border-primary text-foreground hover:bg-primary/10 font-bold"
             >
               Logout
             </Button>
           )}
           {!data?.data?.email && (
-            <Button asChild className="text-sm">
+            <Button asChild className="text-sm bg-primary hover:bg-primary/90 text-primary-foreground font-bold">
               <Link to="/login">Login</Link>
             </Button>
           )}

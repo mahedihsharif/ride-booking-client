@@ -16,6 +16,7 @@ export const authApi = baseApi.injectEndpoints({
         method: "POST",
         data: userInfo,
       }),
+      invalidatesTags: ["AUTH"],
     }),
     changePassword: builder.mutation<IResponse<null>, IPasswordInfo>({
       query: (userPassInfo) => ({

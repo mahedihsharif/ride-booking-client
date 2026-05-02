@@ -45,12 +45,14 @@ export function LoginForm({
           navigate("/user/blocked");
           return;
         } else {
+          localStorage.setItem("accessToken", res.data.accessToken);
           dispatch(
             setUser({
               id: res.data.user._id,
               name: res.data.user.name,
               email: res.data.user.email,
               isActive: res.data.user.isActive as "ACTIVE" | "BLOCKED",
+              token: res.data.accessToken,
             })
           );
           navigate("/");

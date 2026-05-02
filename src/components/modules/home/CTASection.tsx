@@ -17,13 +17,13 @@ export default function CTASection() {
     "Book your ride in just a few clicks and enjoy a safe, comfortable journey.";
 
   return (
-    <section className="py-20 bg-orange-100 dark:bg-gray-900 mb-5">
+    <section className="py-20 bg-background mb-5 text-foreground">
       <div className="max-w-7xl mx-auto px-4 text-center">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-3xl md:text-5xl font-bold mb-6 text-black dark:text-white"
+          className="text-3xl md:text-5xl font-bold mb-6 text-foreground"
         >
           {heading}
         </motion.h2>
@@ -32,7 +32,7 @@ export default function CTASection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-lg md:text-xl mb-8 text-gray-700 dark:text-gray-300"
+          className="text-lg md:text-xl mb-8 text-foreground opacity-80"
         >
           {subText}
         </motion.p>
@@ -48,14 +48,14 @@ export default function CTASection() {
             <>
               <Button
                 size="lg"
-                className="rounded-2xl shadow-lg bg-black dark:bg-orange-500 text-white cursor-pointer"
+                className="rounded-2xl shadow-lg bg-primary hover:bg-primary/90 text-primary-foreground font-bold cursor-pointer transition-all transform hover:scale-105"
               >
                 Request a Ride
               </Button>
               <Button
                 size="lg"
                 variant="outline"
-                className="rounded-2xl border-black dark:border-white text-black dark:text-white hover:bg-black/10 dark:hover:bg-white/10 cursor-pointer"
+                className="rounded-2xl border-primary text-primary hover:bg-primary/10 cursor-pointer font-bold"
                 onClick={() => (window.location.href = "/register")}
               >
                 Sign Up Now
@@ -66,16 +66,15 @@ export default function CTASection() {
           {/* Rider */}
           {userRole === role.RIDER && (
             <>
-              <Button
+              <AddRideModal 
+                context="Request a Ride" 
                 size="lg"
-                className="rounded-2xl shadow-lg bg-black dark:bg-orange-500 text-white cursor-pointer"
-              >
-                <AddRideModal context={"Request a Ride"} />
-              </Button>
+                className="rounded-2xl shadow-lg bg-primary hover:bg-primary/90 text-primary-foreground font-bold cursor-pointer transition-all transform hover:scale-105"
+              />
               <Button
                 size="lg"
                 variant="outline"
-                className="rounded-2xl border-black dark:border-white text-black dark:text-white hover:bg-black/10 dark:hover:bg-white/10 cursor-pointer"
+                className="rounded-2xl border-primary text-primary hover:bg-primary/10 cursor-pointer font-bold"
                 onClick={() => (window.location.href = "/rider/profile")}
               >
                 Become a Driver
@@ -88,7 +87,7 @@ export default function CTASection() {
             <>
               <Button
                 size="lg"
-                className="rounded-2xl shadow-lg bg-black dark:bg-orange-500 text-white cursor-pointer"
+                className="rounded-2xl shadow-lg bg-primary hover:bg-primary/90 text-primary-foreground font-bold cursor-pointer transition-all transform hover:scale-105"
                 onClick={() => (window.location.href = "/driver/profile")}
               >
                 Go Online
@@ -96,7 +95,7 @@ export default function CTASection() {
               <Button
                 size="lg"
                 variant="outline"
-                className="rounded-2xl border-black dark:border-white text-black dark:text-white hover:bg-black/10 dark:hover:bg-white/10 cursor-pointer"
+                className="rounded-2xl border-primary text-primary hover:bg-primary/10 cursor-pointer font-bold"
                 onClick={() => (window.location.href = "/driver/profile")}
               >
                 Become a Rider
@@ -108,7 +107,7 @@ export default function CTASection() {
           {userRole === role.ADMIN && (
             <Button
               size="lg"
-              className="rounded-2xl shadow-lg bg-black dark:bg-orange-500 text-white cursor-pointer"
+              className="rounded-2xl shadow-lg bg-primary hover:bg-primary/90 text-primary-foreground font-bold cursor-pointer transition-all transform hover:scale-105"
               onClick={() => (window.location.href = "/admin")}
             >
               Manage Dashboard

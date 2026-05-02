@@ -87,12 +87,12 @@ export default function OverviewSection() {
   }
 
   return (
-    <section className="py-20 bg-gray-50 dark:bg-[#09090B] transition-colors duration-500">
+    <section className="py-20 bg-background transition-colors duration-500">
       <div className="container mx-auto px-4 text-center">
-        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-gray-100 transition-colors duration-500">
+        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground transition-colors duration-500">
           {heading}
         </h2>
-        <p className="text-gray-600 dark:text-gray-300 mb-12 max-w-2xl mx-auto transition-colors duration-500">
+        <p className="text-muted-foreground mb-12 max-w-2xl mx-auto transition-colors duration-500">
           {subText}
         </p>
 
@@ -100,16 +100,16 @@ export default function OverviewSection() {
           {stepsToRender.map((step, index) => (
             <Card
               key={index}
-              className="hover:shadow-lg transition-shadow bg-white dark:bg-gray-800"
+              className="hover:shadow-lg transition-shadow bg-card border-border"
             >
               <CardContent className="text-center space-y-4">
                 <div className="flex justify-center">
                   <Check className="text-primary w-6 h-6" />
                 </div>
-                <CardTitle className="text-lg font-semibold text-gray-900 dark:text-gray-100 transition-colors duration-500">
+                <CardTitle className="text-lg font-semibold text-foreground transition-colors duration-500">
                   {step.title}
                 </CardTitle>
-                <p className="text-gray-500 dark:text-gray-300 transition-colors duration-500">
+                <p className="text-muted-foreground transition-colors duration-500">
                   {step.description}
                 </p>
               </CardContent>

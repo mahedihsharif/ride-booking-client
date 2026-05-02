@@ -8,6 +8,10 @@ export const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   function (config) {
+    const token = localStorage.getItem("accessToken");
+    if (token && !config.url?.includes("/auth/refresh-token")) {
+      config.headers.set("Authorization", `Bearer ${token}`);
+    }
     return config;
   },
   function (error) {
@@ -40,6 +44,9 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   async (error) => {
+    if (!error.response) {
+      return Promise.reject(error);
+    }
     // console.log("Request failed", error.response.data.message);
 
     const originalRequest = error.config as AxiosRequestConfig & {
@@ -47,8 +54,8 @@ axiosInstance.interceptors.response.use(
     };
 
     if (
-      error.response.status === 500 &&
-      error.response.data.message === "jwt expired" &&
+      (error.response.status === 401 || error.response.status === 500) &&
+      (error.response.data.message === "jwt expired" || error.response.data.message === "Unauthorized") &&
       !originalRequest._retry
     ) {
       console.log("Your token is expired");
@@ -66,6 +73,10 @@ axiosInstance.interceptors.response.use(
       isRefreshing = true;
       try {
         const res = await axiosInstance.post("/auth/refresh-token");
+        const newToken = res.data?.data?.accessToken;
+        if (newToken) {
+          localStorage.setItem("accessToken", newToken);
+        }
         console.log("New Token arrived", res);
 
         processQueue(null);

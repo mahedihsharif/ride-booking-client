@@ -78,12 +78,12 @@ export default function ServicesSection() {
   }
 
   return (
-    <section className="py-20 bg-gray-50 dark:bg-[#09090B]">
+    <section className="py-20 bg-background">
       <div className="max-w-7xl mx-auto px-4 text-center">
-        <h2 className="text-3xl md:text-5xl font-bold mb-4 text-black dark:text-white">
+        <h2 className="text-3xl md:text-5xl font-bold mb-4 text-foreground">
           {heading}
         </h2>
-        <p className="text-lg md:text-xl mb-12 text-gray-700 dark:text-gray-300">
+        <p className="text-lg md:text-xl mb-12 text-muted-foreground">
           {subText}
         </p>
 
@@ -95,15 +95,15 @@ export default function ServicesSection() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.2 }}
             >
-              <Card className="rounded-2xl shadow-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <Card className="rounded-2xl shadow-lg bg-card border-border">
                 <CardContent className="flex flex-col items-center text-center gap-4">
-                  <div className="p-4 bg-orange-100 dark:bg-gray-700 rounded-full">
-                    <Check className="w-6 h-6 text-orange-500 dark:text-white" />
+                  <div className="p-4 bg-[#50fa7b]/20 dark:bg-[#50fa7b]/10 rounded-full">
+                    <Check className="w-6 h-6 text-[#50fa7b]" />
                   </div>
-                  <CardTitle className="text-xl font-semibold text-black dark:text-white">
+                  <CardTitle className="text-xl font-semibold text-foreground">
                     {service.title}
                   </CardTitle>
-                  <p className="text-gray-800 dark:text-gray-300">
+                  <p className="text-muted-foreground">
                     {service.description}
                   </p>
                 </CardContent>

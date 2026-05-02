@@ -39,9 +39,11 @@ import { toast } from "sonner";
 import type z from "zod";
 interface IProps {
   context: string;
+  className?: string;
+  size?: "default" | "sm" | "lg" | "icon";
 }
 
-export function AddRideModal({ context }: IProps) {
+export function AddRideModal({ context, className, size }: IProps) {
   const navigate = useNavigate();
   const { data: userData, isLoading } = useUserInfoQuery(undefined);
   const [open, isOpen] = useState(false);
@@ -83,7 +85,9 @@ export function AddRideModal({ context }: IProps) {
   return (
     <Dialog open={open} onOpenChange={isOpen}>
       <DialogTrigger asChild>
-        <span>{context}</span>
+        <Button className={className} size={size}>
+          {context}
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
@@ -175,8 +179,8 @@ export function AddRideModal({ context }: IProps) {
               Cancel
             </Button>
           </DialogClose>
-          <Button type="submit" className="cursor-pointer" form="request">
-            Request
+          <Button type="submit" className="cursor-pointer bg-primary hover:bg-primary/90 text-primary-foreground font-bold" form="request">
+            Request Now
           </Button>
         </DialogFooter>
       </DialogContent>

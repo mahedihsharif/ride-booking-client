@@ -102,12 +102,12 @@ export default function TestimonialsSection() {
   }
 
   return (
-    <section className="py-20 bg-gray-50 dark:bg-[#09090B]">
+    <section className="py-20 bg-background">
       <div className="max-w-7xl mx-auto px-4 text-center">
-        <h2 className="text-3xl md:text-5xl font-bold mb-4 text-black dark:text-white">
+        <h2 className="text-3xl md:text-5xl font-bold mb-4 text-foreground">
           {heading}
         </h2>
-        <p className="text-lg md:text-xl mb-12 text-gray-700 dark:text-gray-300">
+        <p className="text-lg md:text-xl mb-12 text-muted-foreground">
           {subText}
         </p>
 
@@ -119,20 +119,20 @@ export default function TestimonialsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.2 }}
             >
-              <Card className="rounded-2xl shadow-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-6">
+              <Card className="rounded-2xl shadow-lg bg-card border-border p-6">
                 <CardContent className="flex flex-col items-center text-center gap-4">
                   <img
                     src={t.image}
                     alt={t.name}
-                    className="w-16 h-16 rounded-full border-2 border-orange-500 dark:border-white"
+                    className="w-16 h-16 rounded-full border-2 border-primary"
                   />
-                  <p className="text-gray-800 dark:text-gray-300 italic">
+                  <p className="text-foreground italic">
                     "{t.feedback}"
                   </p>
-                  <h3 className="text-lg font-semibold text-black dark:text-white">
+                  <h3 className="text-lg font-semibold text-foreground">
                     {t.name}
                   </h3>
-                  <span className="text-sm text-gray-600 dark:text-gray-400">
+                  <span className="text-sm text-muted-foreground">
                     {t.role}
                   </span>
                 </CardContent>

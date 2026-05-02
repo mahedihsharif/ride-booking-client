@@ -28,7 +28,7 @@ export const authApi = baseApi.injectEndpoints({
     }),
     riderSingleRideInfo: builder.query<IResponse<ISingleRideData>, RideId>({
       query: (id) => ({
-        url: `/rides/${id}`,
+        url: `/rides/ride/${id}`,
         method: "GET",
       }),
       providesTags: ["RIDE"],

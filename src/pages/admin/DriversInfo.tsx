@@ -166,16 +166,20 @@ export default function DriversInfo() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {usersData?.data?.drivers.map(
-              (user: Partial<IResponseDriverData>, index: number) => (
-                <TableRow
-                  key={user._id}
-                  className={
-                    index % 2 === 0
-                      ? "bg-gray-50 dark:bg-gray-900"
-                      : "bg-white dark:bg-gray-800"
-                  }
-                >
+            {(Array.isArray(usersData?.data)
+              ? usersData?.data
+              : usersData?.data?.drivers ||
+                (usersData?.data as any)?.data ||
+                []
+            ).map((user: Partial<IResponseDriverData>, index: number) => (
+              <TableRow
+                key={user._id}
+                className={
+                  index % 2 === 0
+                    ? "bg-gray-50 dark:bg-gray-900"
+                    : "bg-white dark:bg-gray-800"
+                }
+              >
                   <TableCell>{user.name}</TableCell>
                   <TableCell>{user.email}</TableCell>
                   <TableCell>{user.phone}</TableCell>
