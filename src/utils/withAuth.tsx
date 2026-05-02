@@ -1,4 +1,3 @@
-import { Skeleton } from "@/components/ui/skeleton";
 import { activeUser } from "@/constants/admin.constant";
 import { useUserInfoQuery } from "@/redux/features/auth/auth.api";
 import { useAppSelector } from "@/redux/hook";

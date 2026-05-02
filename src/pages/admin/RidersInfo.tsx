@@ -1,4 +1,4 @@
-import { Card, CardContent } from "@/components/ui/card";
+ 
 import {
   Pagination,
   PaginationContent,
@@ -14,7 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Skeleton } from "@/components/ui/skeleton";
+ 
 import {
   Table,
   TableBody,
