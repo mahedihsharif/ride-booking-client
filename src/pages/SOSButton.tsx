@@ -1,9 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import {
-  useSendSMSMutation,
-  useSendWhatsAppMutation,
-} from "@/redux/features/sms/sms.api";
+import { useSendSOSMutation } from "@/redux/features/sos/sos.api";
 import { useState } from "react";
 import { useGeolocated } from "react-geolocated";
 
@@ -12,22 +9,21 @@ export default function SOSButton() {
     positionOptions: { enableHighAccuracy: true },
   });
   const [message, setMessage] = useState("");
-  const [sendSMS] = useSendSMSMutation();
-  const [sendWhatsApp] = useSendWhatsAppMutation();
+  const [sendSOS] = useSendSOSMutation();
 
   const handleSOS = async () => {
-    // Default coordinates use korbe jodi location na thake
+    // Default coordinates if location is not available
     const lat = coords?.latitude ?? 23.8103;
     const lng = coords?.longitude ?? 90.4125;
 
     const payload = {
       message: `EMERGENCY! Need help at https://maps.google.com/?q=${lat},${lng}`,
-      to: "+880123456789",
+      lat,
+      lng,
     };
 
     try {
-      await sendSMS(payload).unwrap();
-      await sendWhatsApp(payload).unwrap();
+      await sendSOS(payload).unwrap();
       setMessage("✅ SOS alert sent successfully!");
     } catch (err: any) {
       console.error("SOS Error:", err);

@@ -1,25 +1,72 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { rideStatus } from "@/constants/ride.constant";
-import { useRiderSingleRideInfoQuery } from "@/redux/features/rides/ride.api";
-import { Car, Clock, User } from "lucide-react";
+import { useGetSingleRideQuery } from "@/redux/features/rides/ride.api";
+import { Car, Clock, User, RotateCcw } from "lucide-react";
 import { useParams } from "react-router";
 import SOSButton from "../SOSButton";
+import { Button } from "@/components/ui/button";
 
 export default function RequestDetails() {
   const { id } = useParams();
-  const { data, isLoading } = useRiderSingleRideInfoQuery(id!);
+  const {
+    data,
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useGetSingleRideQuery(id!);
 
   if (isLoading) {
-    return <Skeleton className="h-[40px] w-full rounded-lg" />;
+    return (
+      <div className="flex justify-center items-center p-6 bg-background">
+        <div className="w-full max-w-3xl space-y-6">
+          <Skeleton className="h-32 w-full rounded-2xl" />
+          <Skeleton className="h-40 w-full rounded-2xl" />
+          <Skeleton className="h-40 w-full rounded-2xl" />
+          <Skeleton className="h-32 w-full rounded-2xl" />
+        </div>
+      </div>
+    );
+  }
+
+  if (isError) {
+    const errorMsg =
+      (error as any)?.data?.message || "An error occurred while fetching ride details.";
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[400px] text-center p-6">
+        <h2 className="text-2xl font-bold text-red-500 mb-2">Error</h2>
+        <p className="text-muted-foreground mb-4">{errorMsg}</p>
+        <Button onClick={() => refetch()} variant="outline" className="flex items-center gap-2">
+          <RotateCcw className="w-4 h-4" /> Retry
+        </Button>
+      </div>
+    );
   }
 
   const ride = data?.data;
+
+  if (!ride) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[400px] text-center p-6">
+        <h2 className="text-2xl font-bold text-muted-foreground mb-2">
+          Ride Information Not Available
+        </h2>
+        <p className="text-muted-foreground max-w-md">
+          We couldn't find any active ride with this ID. It may have been
+          completed, cancelled, or the link might be incorrect.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="flex items-center justify-center p-6 bg-background">
@@ -29,7 +76,7 @@ export default function RequestDetails() {
           <div>
             <CardTitle className="text-2xl font-bold flex items-center gap-2">
               <Car className="w-6 h-6 text-primary" />
-              Ride Request to {ride?.destinationLocation.address}
+              Ride Request to {ride?.destinationLocation?.address}
             </CardTitle>
             <p className="text-muted-foreground text-sm mt-1">
               Request ID: {ride?._id}
@@ -75,7 +122,7 @@ export default function RequestDetails() {
             </p>
             <p className="text-sm mt-2">
               <span className="font-medium">Date:</span>{" "}
-              {new Date(ride?.createdAt!).toLocaleString()}
+              {ride?.createdAt ? new Date(ride.createdAt).toLocaleString() : "N/A"}
             </p>
             <p className="text-sm mt-1">
               <span className="font-medium">Fare:</span> ৳{ride?.fare}
@@ -133,11 +180,11 @@ export default function RequestDetails() {
             </h3>
             <p className="text-sm mt-2">
               <span className="font-medium">Created At:</span>{" "}
-              {new Date(ride?.createdAt!).toLocaleString()}
+              {ride?.createdAt ? new Date(ride.createdAt).toLocaleString() : "N/A"}
             </p>
             <p className="text-sm mt-1">
               <span className="font-medium">Last Updated:</span>{" "}
-              {new Date(ride?.updatedAt!).toLocaleString()}
+              {ride?.updatedAt ? new Date(ride.updatedAt).toLocaleString() : "N/A"}
             </p>
           </div>
 
@@ -171,3 +218,4 @@ export default function RequestDetails() {
     </div>
   );
 }
+

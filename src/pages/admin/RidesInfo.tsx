@@ -161,7 +161,27 @@ export default function RidesInfo() {
                   <TableCell>{ride.pickupLocation.address}</TableCell>
                   <TableCell>{ride.destinationLocation.address}</TableCell>
                   <TableCell>{ride.paymentMethod}</TableCell>
-                  <TableCell>{ride.status}</TableCell>
+                  <TableCell className="font-medium">
+                    <span
+                      className={
+                        ride.status === rideStatus.COMPLETED
+                          ? "text-green-500 font-medium"
+                          : [rideStatus.REJECTED, rideStatus.CANCELLED].includes(
+                              ride.status
+                            )
+                          ? "text-red-500 font-medium"
+                          : [
+                              rideStatus.ACCEPTED,
+                              rideStatus.PICKED_UP,
+                              rideStatus.IN_TRANSIT,
+                            ].includes(ride.status)
+                          ? "text-blue-500 font-medium"
+                          : "text-gray-500 font-medium"
+                      }
+                    >
+                      {ride.status}
+                    </span>
+                  </TableCell>
                   <TableCell>{ride.fare}</TableCell>
                   <TableCell>
                     {ride.createdAt &&

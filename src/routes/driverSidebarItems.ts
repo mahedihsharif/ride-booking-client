@@ -24,7 +24,7 @@ export const driverSidebarItems: ISidebarItem[] = [
       },
       {
         title: "Ride Status",
-        url: "/driver/ride-status/:id",
+        url: "/driver/ride-status",
         component: StatusUpdatePage,
         icon: Truck,
       },

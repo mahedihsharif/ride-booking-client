@@ -164,7 +164,13 @@ export default function RidersInfo() {
                             id: user._id,
                             status: { isActive: value },
                           }).unwrap();
-                          if (res.success) toast.success(res.message);
+                          if (res.success) {
+                            if (value === activeUser.BLOCKED) {
+                              toast.error(res.message);
+                            } else {
+                              toast.success(res.message);
+                            }
+                          }
                         } catch (error) {
                           if (error) {
                             const errorMsg = globalErrorResponse(error);

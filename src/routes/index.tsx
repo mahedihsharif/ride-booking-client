@@ -27,6 +27,7 @@ const SingleRiderRideDetails = lazy(
 const SingleDriverRideDetails = lazy(
   () => import("@/pages/driver/SingleDriverRideDetails")
 );
+const StatusUpdatePage = lazy(() => import("@/pages/driver/StatusUpdatePage"));
 const DashboardLayout = lazy(
   () => import("@/components/layout/DashboardLayout")
 );
@@ -93,6 +94,10 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <Navigate to="/driver/earning/history" /> },
       ...generateRoutes(driverSidebarItems),
+      {
+        path: "ride-status/:id",
+        Component: StatusUpdatePage,
+      },
     ],
   },
 

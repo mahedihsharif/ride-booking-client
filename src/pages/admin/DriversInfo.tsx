@@ -72,7 +72,7 @@ export default function DriversInfo() {
       } else if (value === activeStatus.SUSPENDED) {
         const res = await suspendDriver({ id }).unwrap();
         if (res.success) {
-          toast.success(res.message);
+          toast.error(res.message);
         }
       }
       refetch();
@@ -184,8 +184,20 @@ export default function DriversInfo() {
                   <TableCell>{user.email}</TableCell>
                   <TableCell>{user.phone}</TableCell>
                   <TableCell>{user.role}</TableCell>
-                  <TableCell className="capitalize">
-                    {user.isApprovedStatus || "N/A"}
+                  <TableCell className="capitalize font-medium">
+                    {user.isApprovedStatus === activeStatus.APPROVED ? (
+                      <span className="text-green-500 font-medium">
+                        {activeStatus.APPROVED}
+                      </span>
+                    ) : user.isApprovedStatus === activeStatus.SUSPENDED ? (
+                      <span className="text-red-500 font-medium">
+                        {activeStatus.SUSPENDED}
+                      </span>
+                    ) : (
+                      <span className="text-yellow-500 font-medium">
+                        {user.isApprovedStatus || "N/A"}
+                      </span>
+                    )}
                   </TableCell>
                   <TableCell>
                     <Select

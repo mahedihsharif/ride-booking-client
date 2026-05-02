@@ -58,9 +58,7 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-  if (isLoading) {
-    return <Skeleton className="h-[20px] w-[100px] rounded-full" />;
-  }
+
   return (
     <header
       className={`sticky top-0 z-50 transition-all duration-300 ${
@@ -113,7 +111,11 @@ const Navbar = () => {
                   {!isLoading &&
                     navigationLinks.map((link, index) => (
                       <React.Fragment key={index}>
-                        {link.role === "PUBLIC" && (
+                        {link.role === "PUBLIC" &&
+                          !(
+                            data?.data?.role === role.ADMIN &&
+                            (link.label === "Contact" || link.label === "Faq")
+                          ) && (
                           <NavigationMenuItem>
                             <NavigationMenuLink
                               asChild
@@ -150,7 +152,11 @@ const Navbar = () => {
                 {!isLoading &&
                   navigationLinks.map((link, index) => (
                     <React.Fragment key={index}>
-                      {link.role === "PUBLIC" && (
+                      {link.role === "PUBLIC" &&
+                        !(
+                          data?.data?.role === role.ADMIN &&
+                          (link.label === "Contact" || link.label === "Faq")
+                        ) && (
                         <NavigationMenuItem>
                           <NavigationMenuLink
                             asChild
@@ -179,7 +185,9 @@ const Navbar = () => {
         {/* Right side */}
         <div className="flex items-center gap-2">
           <ModeToggle />
-          {data?.data?.email && (
+          {isLoading ? (
+            <Skeleton className="h-9 w-20 rounded-md" />
+          ) : data?.data?.email ? (
             <Button
               onClick={handleLogout}
               variant="outline"
@@ -187,9 +195,11 @@ const Navbar = () => {
             >
               Logout
             </Button>
-          )}
-          {!data?.data?.email && (
-            <Button asChild className="text-sm bg-primary hover:bg-primary/90 text-primary-foreground font-bold">
+          ) : (
+            <Button
+              asChild
+              className="text-sm bg-primary hover:bg-primary/90 text-primary-foreground font-bold"
+            >
               <Link to="/login">Login</Link>
             </Button>
           )}
