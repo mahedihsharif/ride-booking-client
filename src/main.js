@@ -1,3 +1,4 @@
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { Provider as ReduxProvider } from "react-redux";
@@ -7,14 +8,4 @@ import "./index.css";
 import { ThemeProvider } from "./providers/theme-provider";
 import { store } from "./redux/store";
 import { router } from "./routes/index";
-
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <ReduxProvider store={store}>
-      <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
-        <RouterProvider router={router}></RouterProvider>
-        <Toaster richColors />
-      </ThemeProvider>
-    </ReduxProvider>
-  </StrictMode>
-);
+createRoot(document.getElementById("root")).render(_jsx(StrictMode, { children: _jsx(ReduxProvider, { store: store, children: _jsxs(ThemeProvider, { defaultTheme: "system", storageKey: "vite-ui-theme", children: [_jsx(RouterProvider, { router: router }), _jsx(Toaster, { richColors: true })] }) }) }));

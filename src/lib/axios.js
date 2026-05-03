@@ -1,0 +1,71 @@
+import config from "@/config";
+import axios from "axios";
+export const axiosInstance = axios.create({
+    baseURL: config.baseUrl,
+    withCredentials: true,
+});
+axiosInstance.interceptors.request.use(function (config) {
+    const token = localStorage.getItem("accessToken");
+    if (token && !config.url?.includes("/auth/refresh-token")) {
+        config.headers.set("Authorization", `Bearer ${token}`);
+    }
+    return config;
+}, function (error) {
+    return Promise.reject(error);
+});
+let isRefreshing = false;
+let pendingQueue = [];
+const processQueue = (error) => {
+    pendingQueue.forEach((promise) => {
+        if (error) {
+            promise.reject(error);
+        }
+        else {
+            promise.resolve(null);
+        }
+    });
+    pendingQueue = [];
+};
+// Add a response interceptor
+axiosInstance.interceptors.response.use((response) => {
+    return response;
+}, async (error) => {
+    if (!error.response) {
+        return Promise.reject(error);
+    }
+    // console.log("Request failed", error.response.data.message);
+    const originalRequest = error.config;
+    if ((error.response.status === 401 || error.response.status === 500) &&
+        (error.response.data.message === "jwt expired" || error.response.data.message === "Unauthorized") &&
+        !originalRequest._retry) {
+        console.log("Your token is expired");
+        originalRequest._retry = true;
+        if (isRefreshing) {
+            return new Promise((resolve, reject) => {
+                pendingQueue.push({ resolve, reject });
+            })
+                .then(() => axiosInstance(originalRequest))
+                .catch((error) => Promise.reject(error));
+        }
+        isRefreshing = true;
+        try {
+            const res = await axiosInstance.post("/auth/refresh-token");
+            const newToken = res.data?.data?.accessToken;
+            if (newToken) {
+                localStorage.setItem("accessToken", newToken);
+            }
+            console.log("New Token arrived", res);
+            processQueue(null);
+            return axiosInstance(originalRequest);
+        }
+        catch (error) {
+            processQueue(error);
+            return Promise.reject(error);
+        }
+        finally {
+            isRefreshing = false;
+        }
+    }
+    //* For Everything
+    return Promise.reject(error);
+});

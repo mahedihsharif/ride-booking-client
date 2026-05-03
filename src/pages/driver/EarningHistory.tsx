@@ -129,7 +129,7 @@ export default function EarningHistory() {
                     <CartesianGrid vertical={false} strokeDasharray="3 3" />
                     <XAxis dataKey="label" tickLine={false} axisLine={false} />
                     <YAxis tickLine={false} axisLine={false} />
-                    <Tooltip formatter={(v: number) => formatBDT(v)} />
+                    <Tooltip formatter={(v: any) => formatBDT(typeof v === 'number' ? v : undefined)} />
                     <Bar dataKey="value" radius={[10, 10, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
@@ -158,7 +158,7 @@ export default function EarningHistory() {
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" tickLine={false} axisLine={false} />
                     <YAxis tickLine={false} axisLine={false} />
-                    <Tooltip formatter={(v: number) => formatBDT(v)} />
+                    <Tooltip formatter={(v: any) => formatBDT(typeof v === 'number' ? v : undefined)} />
                     <Line
                       type="monotone"
                       dataKey="earning"
@@ -193,7 +193,7 @@ export default function EarningHistory() {
                         <Cell key={idx} />
                       ))}
                     </Pie>
-                    <Tooltip formatter={(v: number) => formatBDT(v)} />
+                    <Tooltip formatter={(v: any) => formatBDT(typeof v === 'number' ? v : undefined)} />
                   </PieChart>
                 </ResponsiveContainer>
               )}
